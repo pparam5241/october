@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeService {
 	private final EmployeeRepository employeeRepository;
 	private final DepartmentRepository departmentRepository;
+	private final AsyncService asyncService;
 
 	public Employee createEmployee(EmployeeRequest request) {
 		Optional<Department> opt = departmentRepository.findById(request.getDepartmentId()); // check for department in
@@ -41,5 +42,21 @@ public class EmployeeService {
 		Department dept = opt.get();
 		List<Employee> employees = employeeRepository.findByDepartment_Id(dept.getId());
 		return employees;
+	}
+
+	public void deleteEmployeeById(Long id) throws InterruptedException {
+		// 1 -> use DeleteById function of Jpa
+//		employeeRepository.deleteById(id); // This will simply delete the entry from database
+//		// If there will be no entry availble in database, It won't raise any issue
+//		
+//		// 2 -> use Delete function of jpa
+//		Employee emp = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid Employee Id: " + id));
+//		employeeRepository.delete(emp); // If there will be no entry in database with such details, it will throw an error
+
+		// 3 -> We can write manual JPQL in Repository and use it
+//		employeeRepository.deleteByEmployeeId(id);
+		log.info("Started");
+		asyncService.sampleWaitMethod();
+		log.info("Completed");
 	}
 }
