@@ -2,6 +2,7 @@ package com.session.october.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,12 @@ public class EmployeeService {
 		// 3 -> We can write manual JPQL in Repository and use it
 //		employeeRepository.deleteByEmployeeId(id);
 		log.info("Started");
-		asyncService.sampleWaitMethod();
+		CompletableFuture<Void> future = asyncService.sampleWaitMethod(5);
+		CompletableFuture<Void> future1 = asyncService.sampleWaitMethod(7);
+		CompletableFuture<Void> future2 = asyncService.sampleWaitMethod(10);
+		CompletableFuture<Void> future3 = asyncService.sampleWaitMethod(15);
+		CompletableFuture<Void> all = CompletableFuture.allOf(future, future1, future2, future3);
+		all.join();
 		log.info("Completed");
 	}
 }

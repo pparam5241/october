@@ -16,14 +16,4 @@ public class OctoberApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OctoberApplication.class, args);
 	}
-	
-//	@PostConstruct
-//	public void init() {
-//		log.info("Application Initialized");
-//	}
-//	
-//	@PreDestroy
-//	public void destroy() {
-//		log.info("Destroying the Application");
-//	}
 }
